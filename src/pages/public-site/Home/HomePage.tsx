@@ -2,6 +2,6 @@ import React from 'react'
 
 export const HomePage = () => {
   return (
-    <div>HomePage</div>
+    <div className='bg-amber-950'>HomePage</div>
   )
 }

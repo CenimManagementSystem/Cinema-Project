@@ -5,14 +5,13 @@
 // import { AuthLayout } from '@/layouts/AuthLayout'
 // import { Mainlayout } from '@/layouts/Mainlayout'
 
-import { BrowserRouter, Routes } from "react-router-dom"
+import { HomePage } from "@/pages/public-site/Home/HomePage"
+import { Route, Routes } from "react-router-dom"
 
 export const AppRoutes = () => {
   return (
-    <BrowserRouter>
         <Routes>
-
+          <Route path="/" element={<HomePage/>}/>
         </Routes>
-    </BrowserRouter>
   )
 }
