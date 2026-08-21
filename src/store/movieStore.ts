@@ -17,117 +17,172 @@ interface MovieState {
   cancelBooking: (bookingId: string) => void;
   getMovieById: (id: string) => Movie | undefined;
   getShowtimesByMovieId: (movieId: string) => Showtime[];
+  seedShowtimesForDate: (dateStr: string) => void;
 }
 
 const INITIAL_MOVIES: Movie[] = [
   {
     id: 'm-1',
-    title: 'THE BATMAN',
-    slug: 'the-batman',
-    description: 'When a sadistic serial killer begins murdering key political figures in Gotham, Batman is forced to investigate the city\'s hidden corruption and question his family\'s involvement.',
-    posterUrl: 'https://images.unsplash.com/photo-1509281373149-e957c6296406?auto=format&fit=crop&w=800&q=80',
-    backdropUrl: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1600&q=80',
+    title: 'NEON NIGHTS',
+    slug: 'neon-nights',
+    description: 'A cybersecurity hacker gets trapped in a virtual neon underworld and must hack his way out through layers of digital defense systems.',
+    posterUrl: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80',
+    backdropUrl: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1600&q=80',
     trailerUrl: 'https://www.youtube.com/embed/mqqft2x_Aa4',
-    rating: 8.8,
-    voteCount: 3420,
-    durationMinutes: 176,
-    releaseDate: '2026-03-04',
-    genres: ['Action', 'Crime', 'Drama', 'Mystery'],
+    rating: 4.8,
+    voteCount: 1200,
+    durationMinutes: 124,
+    releaseDate: '2026-09-01',
+    genres: ['Sci-Fi', 'Thriller'],
     director: 'Matt Reeves',
-    cast: ['Robert Pattinson', 'Zoë Kravitz', 'Paul Dano', 'Jeffrey Wright', 'Colin Farrell'],
-    status: 'FEATURED',
+    cast: ['Robert Pattinson', 'Zoë Kravitz'],
+    status: 'COMING_SOON',
     price: 14.5,
   },
   {
     id: 'm-2',
-    title: 'AVATAR: THE WAY OF WATER',
-    slug: 'avatar-the-way-of-water',
-    description: 'Jake Sully lives with his newfound family formed on the extrasolar moon Pandora. Once a familiar threat returns to finish what was previously started, Jake must work with Neytiri and the army of the Na\'vi race to protect their home.',
-    posterUrl: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
-    backdropUrl: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1600&q=80',
+    title: 'THE LAST OASIS',
+    slug: 'the-last-oasis',
+    description: 'In a dying world, hope is the furthest horizon. A small group of survivors embarks on a dangerous journey to find the last green valley on Earth.',
+    posterUrl: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=800&q=80',
+    backdropUrl: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=1600&q=80',
     trailerUrl: 'https://www.youtube.com/embed/d9MyW72ELq0',
-    rating: 8.5,
-    voteCount: 4210,
-    durationMinutes: 192,
-    releaseDate: '2026-04-12',
-    genres: ['Action', 'Adventure', 'Fantasy', 'Sci-Fi'],
+    rating: 4.5,
+    voteCount: 890,
+    durationMinutes: 142,
+    releaseDate: '2026-08-20',
+    genres: ['Drama', 'Adventure'],
     director: 'James Cameron',
-    cast: ['Sam Worthington', 'Zoe Saldana', 'Sigourney Weaver', 'Stephen Lang'],
+    cast: ['Sam Worthington', 'Zoe Saldana'],
     status: 'NOW_SHOWING',
     price: 16.0,
   },
   {
     id: 'm-3',
-    title: 'OPPENHEIMER',
-    slug: 'oppenheimer',
-    description: 'The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb during World War II.',
-    posterUrl: 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=800&q=80',
-    backdropUrl: 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=1600&q=80',
+    title: 'QUANTUM SHIFT',
+    slug: 'quantum-shift',
+    description: 'Reality is fragmenting. Survive the shift. A brilliant physicist discovers a machine that can rewrite timelines, but it attracts forces that want to weaponize it.',
+    posterUrl: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80',
+    backdropUrl: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1600&q=80',
     trailerUrl: 'https://www.youtube.com/embed/uYPbbksJxIg',
-    rating: 8.9,
-    voteCount: 5120,
-    durationMinutes: 180,
-    releaseDate: '2026-05-20',
-    genres: ['Biography', 'Drama', 'History'],
+    rating: 4.2,
+    voteCount: 650,
+    durationMinutes: 118,
+    releaseDate: '2026-08-15',
+    genres: ['Sci-Fi', 'Mystery'],
     director: 'Christopher Nolan',
-    cast: ['Cillian Murphy', 'Emily Blunt', 'Matt Damon', 'Robert Downey Jr.'],
+    cast: ['Cillian Murphy', 'Emily Blunt'],
     status: 'NOW_SHOWING',
     price: 15.0,
   },
   {
     id: 'm-4',
-    title: 'DUNE: PART TWO',
-    slug: 'dune-part-two',
-    description: 'Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family.',
-    posterUrl: 'https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?auto=format&fit=crop&w=800&q=80',
-    backdropUrl: 'https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?auto=format&fit=crop&w=1600&q=80',
+    title: 'ECHOES OF THE PAST',
+    slug: 'echoes-of-the-past',
+    description: 'Time may fade, but memories remain. A classical pianist suffering from memory loss reconstructs her life through the melodies she once played.',
+    posterUrl: 'https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&w=800&q=80',
+    backdropUrl: 'https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&w=1600&q=80',
     trailerUrl: 'https://www.youtube.com/embed/Way9Dexny3w',
-    rating: 8.7,
-    voteCount: 2980,
-    durationMinutes: 166,
-    releaseDate: '2026-06-15',
-    genres: ['Action', 'Adventure', 'Drama', 'Sci-Fi'],
+    rating: 4.6,
+    voteCount: 1100,
+    durationMinutes: 135,
+    releaseDate: '2026-08-18',
+    genres: ['Drama', 'Romance'],
     director: 'Denis Villeneuve',
-    cast: ['Timothée Chalamet', 'Zendaya', 'Rebecca Ferguson', 'Javier Bardem'],
+    cast: ['Timothée Chalamet', 'Zendaya'],
     status: 'NOW_SHOWING',
     price: 15.5,
   },
   {
     id: 'm-5',
-    title: 'INTERSTELLAR',
-    slug: 'interstellar',
-    description: 'When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot, Joseph Cooper, is tasked to pilot a spacecraft, along with a team of researchers, to find a new planet for humans.',
+    title: 'INTERSTELLAR DRIFT',
+    slug: 'interstellar-drift',
+    description: 'When Earth becomes uninhabitable in the future, a team of pioneers travels through a wormhole in search of a new home, discovering the secrets of gravity, time, and human connection.',
     posterUrl: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80',
     backdropUrl: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600&q=80',
     trailerUrl: 'https://www.youtube.com/embed/zSWdZVtXT7E',
-    rating: 9.0,
+    rating: 4.9,
     voteCount: 6890,
-    durationMinutes: 169,
+    durationMinutes: 165,
     releaseDate: '2026-07-01',
-    genres: ['Adventure', 'Drama', 'Sci-Fi'],
+    genres: ['Sci-Fi', 'Adventure', 'Drama'],
     director: 'Christopher Nolan',
-    cast: ['Matthew McConaughey', 'Anne Hathaway', 'Jessica Chastain', 'Michael Caine'],
-    status: 'COMING_SOON',
-    price: 13.5,
+    cast: ['Matthew McConaughey', 'Anne Hathaway', 'Jessica Chastain'],
+    status: 'NOW_SHOWING',
+    price: 14.0,
   },
   {
     id: 'm-6',
-    title: 'SPIDER-MAN: ACROSS THE SPIDER-VERSE',
-    slug: 'spider-man-across-the-spider-verse',
-    description: 'Miles Morales catapults across the Multiverse, where he encounters a team of Spider-People charged with protecting its very existence.',
-    posterUrl: 'https://images.unsplash.com/photo-1635805737707-575885ab0820?auto=format&fit=crop&w=800&q=80',
-    backdropUrl: 'https://images.unsplash.com/photo-1635805737707-575885ab0820?auto=format&fit=crop&w=1600&q=80',
+    title: 'SIREN CALL',
+    slug: 'siren-call',
+    description: 'A terrifying marine expedition goes wrong when the crew encounters an ancient supernatural force calling from the deep ocean.',
+    posterUrl: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80',
+    backdropUrl: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80',
     trailerUrl: 'https://www.youtube.com/embed/cqGjhVJWtEg',
-    rating: 8.6,
-    voteCount: 3100,
-    durationMinutes: 140,
-    releaseDate: '2026-08-10',
-    genres: ['Animation', 'Action', 'Adventure', 'Family'],
-    director: 'Joaquim Dos Santos, Kemp Powers',
-    cast: ['Shameik Moore', 'Hailee Steinfeld', 'Oscar Isaac'],
+    rating: 4.0,
+    voteCount: 450,
+    durationMinutes: 105,
+    releaseDate: '2026-09-15',
+    genres: ['Horror', 'Thriller'],
+    director: 'Joaquim Dos Santos',
+    cast: ['Shameik Moore', 'Hailee Steinfeld'],
     status: 'COMING_SOON',
     price: 12.5,
   },
+  {
+    id: 'm-7',
+    title: 'THE GILDED CAGE',
+    slug: 'the-gilded-cage',
+    description: 'A high-stakes dramatic mystery surrounding the complex relationships and secrets hidden behind the walls of a family mansion.',
+    posterUrl: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=800&q=80',
+    backdropUrl: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=1600&q=80',
+    trailerUrl: 'https://www.youtube.com/embed/cqGjhVJWtEg',
+    rating: 4.7,
+    voteCount: 1540,
+    durationMinutes: 132,
+    releaseDate: '2026-08-01',
+    genres: ['Drama', 'Mystery'],
+    director: 'Olivier Masset-Depasse',
+    cast: ['Anne Coesens', 'Arieh Worthalter'],
+    status: 'NOW_SHOWING',
+    price: 15.0,
+  },
+  {
+    id: 'm-8',
+    title: 'NEON FOREST',
+    slug: 'neon-forest',
+    description: 'A charming animated film about a hidden glowing ecosystem that becomes threatened by an expanding cybercity.',
+    posterUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80',
+    backdropUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1600&q=80',
+    trailerUrl: 'https://www.youtube.com/embed/cqGjhVJWtEg',
+    rating: 4.2,
+    voteCount: 890,
+    durationMinutes: 98,
+    releaseDate: '2026-08-15',
+    genres: ['Animation', 'Family', 'Fantasy'],
+    director: 'Makoto Shinkai',
+    cast: ['Ryunosuke Kamiki', 'Mone Kamishiraishi'],
+    status: 'NOW_SHOWING',
+    price: 12.5,
+  },
+  {
+    id: 'm-9',
+    title: 'URBAN JUNGLE',
+    slug: 'urban-jungle',
+    description: 'In the concrete wilderness, only the strongest survive. A gritty crime drama about a young investigator uncovering corruption inside a mega-corporation.',
+    posterUrl: 'https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?auto=format&fit=crop&w=800&q=80',
+    backdropUrl: 'https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?auto=format&fit=crop&w=1600&q=80',
+    trailerUrl: 'https://www.youtube.com/embed/cqGjhVJWtEg',
+    rating: 4.4,
+    voteCount: 950,
+    durationMinutes: 130,
+    releaseDate: '2026-10-01',
+    genres: ['Action', 'Crime'],
+    director: 'Makoto Shinkai',
+    cast: ['Ryunosuke Kamiki', 'Mone Kamishiraishi'],
+    status: 'COMING_SOON',
+    price: 13.0,
+  }
 ];
 
 const INITIAL_SHOWTIMES: Showtime[] = [
@@ -306,4 +361,408 @@ export const useMovieStore = create<MovieState>((set, get) => ({
 
   getShowtimesByMovieId: (movieId) =>
     get().showtimes.filter((st) => st.movieId === movieId),
+
+  seedShowtimesForDate: (dateStr) => {
+    const existing = get().showtimes.some((st) => st.date === dateStr && st.id.startsWith('st-gen-'));
+    if (existing) return;
+
+    const newShowtimes: Showtime[] = [];
+    const cinemas = [
+      { id: 'c-1', name: 'Cinematique Grand Central' },
+      { id: 'c-2', name: 'Cinematique City Center' },
+      { id: 'c-3', name: 'Cinematique Sunset Strip' }
+    ];
+
+    get().movies.forEach((movie) => {
+      cinemas.forEach((cinema) => {
+        // Interstellar Drift (m-5)
+        if (movie.id === 'm-5') {
+          // IMAX
+          newShowtimes.push({
+            id: `st-gen-m5-imax-${cinema.id}-${dateStr}`,
+            movieId: 'm-5',
+            cinemaId: cinema.id,
+            cinemaName: cinema.name,
+            hallName: 'IMAX 3D Laser',
+            date: dateStr,
+            time: '16:20',
+            format: 'IMAX',
+            price: 18.0,
+            vipPrice: 26.0,
+            occupiedSeats: ['A3', 'A4', 'B5', 'B6']
+          });
+          newShowtimes.push({
+            id: `st-gen-m5-imax2-${cinema.id}-${dateStr}`,
+            movieId: 'm-5',
+            cinemaId: cinema.id,
+            cinemaName: cinema.name,
+            hallName: 'IMAX 3D Laser',
+            date: dateStr,
+            time: '17:45',
+            format: 'IMAX',
+            price: 18.0,
+            vipPrice: 26.0,
+            occupiedSeats: ['B1', 'B2', 'C3', 'C4', 'D5', 'D6']
+          });
+          newShowtimes.push({
+            id: `st-gen-m5-imax3-${cinema.id}-${dateStr}`,
+            movieId: 'm-5',
+            cinemaId: cinema.id,
+            cinemaName: cinema.name,
+            hallName: 'IMAX 3D Laser',
+            date: dateStr,
+            time: '21:10',
+            format: 'IMAX',
+            price: 18.0,
+            vipPrice: 26.0,
+            occupiedSeats: ['E1', 'E2']
+          });
+
+          // Standard
+          newShowtimes.push({
+            id: `st-gen-m5-std1-${cinema.id}-${dateStr}`,
+            movieId: 'm-5',
+            cinemaId: cinema.id,
+            cinemaName: cinema.name,
+            hallName: 'Standard Digital',
+            date: dateStr,
+            time: '11:00',
+            format: '2D',
+            price: 14.0,
+            vipPrice: 20.0,
+            occupiedSeats: []
+          });
+          newShowtimes.push({
+            id: `st-gen-m5-std2-${cinema.id}-${dateStr}`,
+            movieId: 'm-5',
+            cinemaId: cinema.id,
+            cinemaName: cinema.name,
+            hallName: 'Standard Digital',
+            date: dateStr,
+            time: '13:30',
+            format: '2D',
+            price: 14.0,
+            vipPrice: 20.0,
+            occupiedSeats: ['C1', 'C2']
+          });
+          newShowtimes.push({
+            id: `st-gen-m5-std3-${cinema.id}-${dateStr}`,
+            movieId: 'm-5',
+            cinemaId: cinema.id,
+            cinemaName: cinema.name,
+            hallName: 'Standard Digital',
+            date: dateStr,
+            time: '16:00',
+            format: '2D',
+            price: 14.0,
+            vipPrice: 20.0,
+            occupiedSeats: ['A1', 'A2', 'B3', 'B4']
+          });
+          newShowtimes.push({
+            id: `st-gen-m5-std4-${cinema.id}-${dateStr}`,
+            movieId: 'm-5',
+            cinemaId: cinema.id,
+            cinemaName: cinema.name,
+            hallName: 'Standard Digital',
+            date: dateStr,
+            time: '18:30',
+            format: '2D',
+            price: 14.0,
+            vipPrice: 20.0,
+            occupiedSeats: Array.from({ length: 80 }, (_, i) => {
+              const row = ['A','B','C','D','E','F','G','H'][Math.floor(i / 10)];
+              const seatNum = (i % 10) + 1;
+              return `${row}${seatNum}`;
+            })
+          });
+          newShowtimes.push({
+            id: `st-gen-m5-std5-${cinema.id}-${dateStr}`,
+            movieId: 'm-5',
+            cinemaId: cinema.id,
+            cinemaName: cinema.name,
+            hallName: 'Standard Digital',
+            date: dateStr,
+            time: '22:00',
+            format: '2D',
+            price: 14.0,
+            vipPrice: 20.0,
+            occupiedSeats: []
+          });
+        }
+
+        // The Gilded Cage (m-7)
+        if (movie.id === 'm-7') {
+          // VIP Director Suite
+          newShowtimes.push({
+            id: `st-gen-m7-vip1-${cinema.id}-${dateStr}`,
+            movieId: 'm-7',
+            cinemaId: cinema.id,
+            cinemaName: cinema.name,
+            hallName: "Director's Suite VIP",
+            date: dateStr,
+            time: '15:00',
+            format: 'VIP',
+            price: 25.0,
+            vipPrice: 45.0,
+            occupiedSeats: ['F1', 'F2', 'G3']
+          });
+          newShowtimes.push({
+            id: `st-gen-m7-vip2-${cinema.id}-${dateStr}`,
+            movieId: 'm-7',
+            cinemaId: cinema.id,
+            cinemaName: cinema.name,
+            hallName: "Director's Suite VIP",
+            date: dateStr,
+            time: '18:30',
+            format: 'VIP',
+            price: 25.0,
+            vipPrice: 45.0,
+            occupiedSeats: []
+          });
+          newShowtimes.push({
+            id: `st-gen-m7-vip3-${cinema.id}-${dateStr}`,
+            movieId: 'm-7',
+            cinemaId: cinema.id,
+            cinemaName: cinema.name,
+            hallName: "Director's Suite VIP",
+            date: dateStr,
+            time: '21:45',
+            format: 'VIP',
+            price: 25.0,
+            vipPrice: 45.0,
+            occupiedSeats: ['F4', 'F5', 'F6', 'G7', 'G8']
+          });
+
+          // Dolby Atmos
+          newShowtimes.push({
+            id: `st-gen-m7-dolby1-${cinema.id}-${dateStr}`,
+            movieId: 'm-7',
+            cinemaId: cinema.id,
+            cinemaName: cinema.name,
+            hallName: 'Dolby Atmos',
+            date: dateStr,
+            time: '12:45',
+            format: 'Dolby',
+            price: 15.0,
+            vipPrice: 22.0,
+            occupiedSeats: []
+          });
+          newShowtimes.push({
+            id: `st-gen-m7-dolby2-${cinema.id}-${dateStr}`,
+            movieId: 'm-7',
+            cinemaId: cinema.id,
+            cinemaName: cinema.name,
+            hallName: 'Dolby Atmos',
+            date: dateStr,
+            time: '15:50',
+            format: 'Dolby',
+            price: 15.0,
+            vipPrice: 22.0,
+            occupiedSeats: ['C1', 'C2']
+          });
+        }
+
+        // Neon Forest (m-8)
+        if (movie.id === 'm-8') {
+          // Standard 3D
+          newShowtimes.push({
+            id: `st-gen-m8-3d1-${cinema.id}-${dateStr}`,
+            movieId: 'm-8',
+            cinemaId: cinema.id,
+            cinemaName: cinema.name,
+            hallName: 'Standard 3D',
+            date: dateStr,
+            time: '10:15',
+            format: '3D',
+            price: 15.0,
+            vipPrice: 22.0,
+            occupiedSeats: []
+          });
+          newShowtimes.push({
+            id: `st-gen-m8-3d2-${cinema.id}-${dateStr}`,
+            movieId: 'm-8',
+            cinemaId: cinema.id,
+            cinemaName: cinema.name,
+            hallName: 'Standard 3D',
+            date: dateStr,
+            time: '12:30',
+            format: '3D',
+            price: 15.0,
+            vipPrice: 22.0,
+            occupiedSeats: ['B1', 'B2']
+          });
+          newShowtimes.push({
+            id: `st-gen-m8-3d3-${cinema.id}-${dateStr}`,
+            movieId: 'm-8',
+            cinemaId: cinema.id,
+            cinemaName: cinema.name,
+            hallName: 'Standard 3D',
+            date: dateStr,
+            time: '14:45',
+            format: '3D',
+            price: 15.0,
+            vipPrice: 22.0,
+            occupiedSeats: []
+          });
+        }
+
+        // The Last Oasis (m-2)
+        if (movie.id === 'm-2') {
+          newShowtimes.push({
+            id: `st-gen-m2-vip1-${cinema.id}-${dateStr}`,
+            movieId: 'm-2',
+            cinemaId: cinema.id,
+            cinemaName: cinema.name,
+            hallName: "Director's Suite VIP",
+            date: dateStr,
+            time: '14:00',
+            format: 'VIP',
+            price: 25.0,
+            vipPrice: 45.0,
+            occupiedSeats: ['F1', 'F2']
+          });
+          newShowtimes.push({
+            id: `st-gen-m2-std1-${cinema.id}-${dateStr}`,
+            movieId: 'm-2',
+            cinemaId: cinema.id,
+            cinemaName: cinema.name,
+            hallName: 'Standard Digital',
+            date: dateStr,
+            time: '11:30',
+            format: '2D',
+            price: 14.0,
+            vipPrice: 20.0,
+            occupiedSeats: []
+          });
+          newShowtimes.push({
+            id: `st-gen-m2-std2-${cinema.id}-${dateStr}`,
+            movieId: 'm-2',
+            cinemaId: cinema.id,
+            cinemaName: cinema.name,
+            hallName: 'Standard Digital',
+            date: dateStr,
+            time: '15:30',
+            format: '2D',
+            price: 14.0,
+            vipPrice: 20.0,
+            occupiedSeats: ['A3', 'B4']
+          });
+          newShowtimes.push({
+            id: `st-gen-m2-std3-${cinema.id}-${dateStr}`,
+            movieId: 'm-2',
+            cinemaId: cinema.id,
+            cinemaName: cinema.name,
+            hallName: 'Standard Digital',
+            date: dateStr,
+            time: '20:30',
+            format: '2D',
+            price: 14.0,
+            vipPrice: 20.0,
+            occupiedSeats: []
+          });
+        }
+
+        // Quantum Shift (m-3)
+        if (movie.id === 'm-3') {
+          newShowtimes.push({
+            id: `st-gen-m3-3d1-${cinema.id}-${dateStr}`,
+            movieId: 'm-3',
+            cinemaId: cinema.id,
+            cinemaName: cinema.name,
+            hallName: 'Standard 3D',
+            date: dateStr,
+            time: '12:00',
+            format: '3D',
+            price: 15.0,
+            vipPrice: 22.0,
+            occupiedSeats: []
+          });
+          newShowtimes.push({
+            id: `st-gen-m3-std1-${cinema.id}-${dateStr}`,
+            movieId: 'm-3',
+            cinemaId: cinema.id,
+            cinemaName: cinema.name,
+            hallName: 'Standard Digital',
+            date: dateStr,
+            time: '10:00',
+            format: '2D',
+            price: 14.0,
+            vipPrice: 20.0,
+            occupiedSeats: []
+          });
+          newShowtimes.push({
+            id: `st-gen-m3-std2-${cinema.id}-${dateStr}`,
+            movieId: 'm-3',
+            cinemaId: cinema.id,
+            cinemaName: cinema.name,
+            hallName: 'Standard Digital',
+            date: dateStr,
+            time: '14:00',
+            format: '2D',
+            price: 14.0,
+            vipPrice: 20.0,
+            occupiedSeats: ['B1', 'B2']
+          });
+          newShowtimes.push({
+            id: `st-gen-m3-std3-${cinema.id}-${dateStr}`,
+            movieId: 'm-3',
+            cinemaId: cinema.id,
+            cinemaName: cinema.name,
+            hallName: 'Standard Digital',
+            date: dateStr,
+            time: '18:30',
+            format: '2D',
+            price: 14.0,
+            vipPrice: 20.0,
+            occupiedSeats: []
+          });
+        }
+
+        // Echoes of the Past (m-4)
+        if (movie.id === 'm-4') {
+          newShowtimes.push({
+            id: `st-gen-m4-std1-${cinema.id}-${dateStr}`,
+            movieId: 'm-4',
+            cinemaId: cinema.id,
+            cinemaName: cinema.name,
+            hallName: 'Standard Digital',
+            date: dateStr,
+            time: '12:30',
+            format: '2D',
+            price: 14.0,
+            vipPrice: 20.0,
+            occupiedSeats: []
+          });
+          newShowtimes.push({
+            id: `st-gen-m4-std2-${cinema.id}-${dateStr}`,
+            movieId: 'm-4',
+            cinemaId: cinema.id,
+            cinemaName: cinema.name,
+            hallName: 'Standard Digital',
+            date: dateStr,
+            time: '16:30',
+            format: '2D',
+            price: 14.0,
+            vipPrice: 20.0,
+            occupiedSeats: ['E1', 'E2']
+          });
+          newShowtimes.push({
+            id: `st-gen-m4-std3-${cinema.id}-${dateStr}`,
+            movieId: 'm-4',
+            cinemaId: cinema.id,
+            cinemaName: cinema.name,
+            hallName: 'Standard Digital',
+            date: dateStr,
+            time: '20:45',
+            format: '2D',
+            price: 14.0,
+            vipPrice: 20.0,
+            occupiedSeats: []
+          });
+        }
+      });
+    });
+
+    set((state) => ({ showtimes: [...state.showtimes, ...newShowtimes] }));
+  },
 }));

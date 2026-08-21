@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Film, Search, Ticket, User, Menu, X, Shield, LogOut } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 import { useAuthStore } from '@/store/authStore';
 
 export const Navbar: React.FC = () => {
@@ -13,28 +14,15 @@ export const Navbar: React.FC = () => {
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'Movies', path: '/movies' },
-    { name: 'Cinemas', path: '/#cinemas' },
+    { name: 'Cinemas', path: '/cinemas' },
+    { name: 'Comming Soon', path: '/coming-soon' },
+    { name: 'Offers', path: '/offers'},
     { name: 'My Tickets', path: '/history' },
   ];
 
   const isActive = (path: string) => {
-    if (path === '/') return location.pathname === '/' && !location.hash;
-    if (path.includes('#')) {
-      return location.pathname === '/' && location.hash === path.slice(1);
-    }
+    if (path === '/') return location.pathname === '/';
     return location.pathname.startsWith(path);
-  };
-
-  const handleNavClick = (path: string) => {
-    // If it's a hash link and we're already on the home page,
-    // manually scroll since React Router won't re-trigger navigation
-    if (path.includes('#') && location.pathname === '/') {
-      const elementId = path.split('#')[1];
-      const element = document.getElementById(elementId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }
   };
 
   return (
@@ -58,7 +46,6 @@ export const Navbar: React.FC = () => {
               <Link
                 key={link.name}
                 to={link.path}
-                onClick={() => handleNavClick(link.path)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                   active
                     ? 'text-white bg-white/10 shadow-inner'
@@ -111,62 +98,70 @@ export const Navbar: React.FC = () => {
               </button>
 
               {/* Dropdown Menu */}
-              {userDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-56 bg-[#18181b] border border-white/10 rounded-xl shadow-2xl p-2 z-50 animate-in fade-in zoom-in-95">
-                  <div className="px-3 py-2 border-b border-white/10 mb-1">
-                    <p className="text-xs font-semibold text-white">{user.name}</p>
-                    <p className="text-[11px] text-gray-400 truncate">{user.email}</p>
-                    <span className="inline-block mt-1 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-[#E50914]/20 text-[#E50914]">
-                      {user.role} Role
-                    </span>
-                  </div>
+              <AnimatePresence>
+                {userDropdownOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -8, scale: 0.96 }}
+                    transition={{ duration: 0.15, ease: 'easeOut' }}
+                    className="absolute right-0 mt-2 w-56 bg-[#18181b] border border-white/10 rounded-xl shadow-2xl p-2 z-50 origin-top-right"
+                  >
+                    <div className="px-3 py-2 border-b border-white/10 mb-1">
+                      <p className="text-xs font-semibold text-white">{user.name}</p>
+                      <p className="text-[11px] text-gray-400 truncate">{user.email}</p>
+                      <span className="inline-block mt-1 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-[#E50914]/20 text-[#E50914]">
+                        {user.role} Role
+                      </span>
+                    </div>
 
-                  {user.role === 'ADMIN' ? (
+                    {user.role === 'ADMIN' ? (
+                      <Link
+                        to="/admin/dashboard"
+                        onClick={() => setUserDropdownOpen(false)}
+                        className="flex items-center gap-2 px-3 py-2 text-xs text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                      >
+                        <Shield className="w-4 h-4 text-[#E50914]" />
+                        Admin Dashboard
+                      </Link>
+                    ) : null}
+
                     <Link
-                      to="/admin/dashboard"
+                      to="/history"
                       onClick={() => setUserDropdownOpen(false)}
                       className="flex items-center gap-2 px-3 py-2 text-xs text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
                     >
-                      <Shield className="w-4 h-4 text-[#E50914]" />
-                      Admin Dashboard
+                      <Ticket className="w-4 h-4 text-amber-400" />
+                      My Bookings
                     </Link>
-                  ) : null}
 
-                  <Link
-                    to="/history"
-                    onClick={() => setUserDropdownOpen(false)}
-                    className="flex items-center gap-2 px-3 py-2 text-xs text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
-                  >
-                    <Ticket className="w-4 h-4 text-amber-400" />
-                    My Bookings
-                  </Link>
-
-                  {/* Switch role quick toggle for demo */}
-                  <button
-                    onClick={() => {
-                      switchRole(user.role === 'ADMIN' ? 'USER' : 'ADMIN');
-                      setUserDropdownOpen(false);
-                    }}
-                    className="w-full text-left flex items-center gap-2 px-3 py-2 text-xs text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
-                  >
-                    <User className="w-4 h-4 text-cyan-400" />
-                    Switch to {user.role === 'ADMIN' ? 'User' : 'Admin'} Mode
-                  </button>
-
-                  <div className="border-t border-white/10 my-1 pt-1">
+                    {/* Switch role quick toggle for demo */}
                     <button
                       onClick={() => {
-                        logout();
+                        switchRole(user.role === 'ADMIN' ? 'USER' : 'ADMIN');
                         setUserDropdownOpen(false);
                       }}
-                      className="w-full text-left flex items-center gap-2 px-3 py-2 text-xs text-rose-400 hover:bg-rose-500/10 rounded-lg transition-colors"
+                      className="w-full text-left flex items-center gap-2 px-3 py-2 text-xs text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
                     >
-                      <LogOut className="w-4 h-4" />
-                      Sign Out
+                      <User className="w-4 h-4 text-cyan-400" />
+                      Switch to {user.role === 'ADMIN' ? 'User' : 'Admin'} Mode
                     </button>
-                  </div>
-                </div>
-              )}
+
+                    <div className="border-t border-white/10 my-1 pt-1">
+                      <button
+                        onClick={() => {
+                          logout();
+                          setUserDropdownOpen(false);
+                        }}
+                        className="w-full text-left flex items-center gap-2 px-3 py-2 text-xs text-rose-400 hover:bg-rose-500/10 rounded-lg transition-colors"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        Sign Out
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           ) : (
             <div className="flex items-center gap-2">
@@ -198,53 +193,58 @@ export const Navbar: React.FC = () => {
       </div>
 
       {/* Mobile Menu Dropdown */}
-      {mobileMenuOpen && (
-        <div className="md:hidden glass-nav border-t border-white/10 px-4 py-4 space-y-2">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              to={link.path}
-              onClick={() => {
-                handleNavClick(link.path);
-                setMobileMenuOpen(false);
-              }}
-              className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10"
-            >
-              {link.name}
-            </Link>
-          ))}
-          {user?.role === 'ADMIN' && (
-            <Link
-              to="/admin/dashboard"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-sm font-medium text-[#E50914] bg-[#E50914]/10"
-            >
-              Admin Panel
-            </Link>
-          )}
-          <div className="border-t border-white/10 pt-3 flex flex-col gap-2">
-            {isAuthenticated ? (
-              <button
-                onClick={() => {
-                  logout();
-                  setMobileMenuOpen(false);
-                }}
-                className="w-full text-left px-3 py-2 text-sm font-medium text-rose-400"
-              >
-                Sign Out ({user?.name})
-              </button>
-            ) : (
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.22, ease: 'easeInOut' }}
+            className="md:hidden glass-nav border-t border-white/10 px-4 py-4 space-y-2 overflow-hidden"
+          >
+            {navLinks.map((link) => (
               <Link
-                to="/login"
+                key={link.name}
+                to={link.path}
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full text-center py-2.5 rounded-lg bg-[#E50914] text-white text-xs font-bold"
+                className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10"
               >
-                Sign In
+                {link.name}
+              </Link>
+            ))}
+            {user?.role === 'ADMIN' && (
+              <Link
+                to="/admin/dashboard"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-3 py-2 rounded-lg text-sm font-medium text-[#E50914] bg-[#E50914]/10"
+              >
+                Admin Panel
               </Link>
             )}
-          </div>
-        </div>
-      )}
+            <div className="border-t border-white/10 pt-3 flex flex-col gap-2">
+              {isAuthenticated ? (
+                <button
+                  onClick={() => {
+                    logout();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="w-full text-left px-3 py-2 text-sm font-medium text-rose-400"
+                >
+                  Sign Out ({user?.name})
+                </button>
+              ) : (
+                <Link
+                  to="/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full text-center py-2.5 rounded-lg bg-[#E50914] text-white text-xs font-bold"
+                >
+                  Sign In
+                </Link>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 };

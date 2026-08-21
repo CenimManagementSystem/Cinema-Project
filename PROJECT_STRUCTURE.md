@@ -73,8 +73,7 @@ Frontend/
 │   │
 │   ├── hooks/
 │   │   ├── useAuth.ts
-│   │   ├── useDebounce.ts
-│   │   └── useHashScroll.ts
+│   │   └── useDebounce.ts
 │   │
 │   ├── layouts/
 │   │   ├── AuthLayout.tsx
@@ -110,6 +109,9 @@ Frontend/
 │   │   └── public-site/
 │   │       ├── Booking/
 │   │       │   ├── BookingPage.tsx
+│   │       │   └── index.ts
+│   │       ├── Cinemas/
+│   │       │   ├── CinemasPage.tsx
 │   │       │   └── index.ts
 │   │       ├── History/
 │   │       │   ├── HistoryPage.tsx
@@ -185,7 +187,7 @@ Organized into three strict subdirectories:
 
 ## `layouts/`
 Structural wrappers rendered by React Router containing `<Outlet />`:
-- **`Mainlayout.tsx`**: Header Navbar, main scrollable content area with `useHashScroll()`, and Footer.
+- **`Mainlayout.tsx`**: Header Navbar, main scrollable content area (resets scroll on route transition), and Footer.
 - **`DashboardLayout.tsx`**: Admin Sidebar navigation, header, and dashboard content view.
 - **`AuthLayout.tsx`**: Centered card layout with cinematic background for Login and Register pages.
 
@@ -195,7 +197,8 @@ Structural wrappers rendered by React Router containing `<Outlet />`:
 Page views mapped to routes:
 
 ### `public-site/`
-- **`Home/HomePage.tsx`**: Hero showcase banner, featured premiere, cinema formats section (`#cinemas`).
+- **`Home/HomePage.tsx`**: Hero showcase banner, featured premiere, and cinema formats showcase section.
+- **`Cinemas/CinemasPage.tsx`**: Showcase of premium formats and local theater locations (`/cinemas`).
 - **`Movies/MoviesPage.tsx`**: Dedicated catalog page (`/movies`) with search by title/genre and category filters.
 - **`Movies/MovieDetailPage.tsx`**: Single movie page (`/movies/:id`) with synopsis, trailer modal, date selector, and showtime listings.
 - **`Booking/BookingPage.tsx`**: Interactive cinema seat grid selection, pricing calculator, and ticket confirmation (`/booking/:showtimeId`).
@@ -228,7 +231,6 @@ Zustand-powered global state stores:
 ---
 
 ## `hooks/`
-- **`useHashScroll.ts`**: Enables smooth in-page scrolling to hash anchors (e.g., `/#cinemas`) across React Router navigation.
 - **`useDebounce.ts`**: Debounces fast-changing state values.
 - **`useAuth.ts`**: Auth helper hook.
 

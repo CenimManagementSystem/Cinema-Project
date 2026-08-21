@@ -15,7 +15,7 @@ This document defines the purpose, rules, and best practices for each directory 
 | `src/components/ui/` | Atomic, presentational UI primitives (Button, Modal, Card, Input) | ❌ No | ❌ No |
 | `src/context/` | React Context providers (Theme, Auth fallback) | ⚠️ State Only | ❌ No |
 | `src/docs/` | Architectural & coding documentation | ❌ No | ❌ No |
-| `src/hooks/` | Reusable custom React hooks (`useHashScroll`, `useDebounce`) | ✅ Hook Logic | ⚠️ Via Store/Service |
+| `src/hooks/` | Reusable custom React hooks (`useDebounce`, `useAuth`) | ✅ Hook Logic | ⚠️ Via Store/Service |
 | `src/layouts/` | Structural page layouts (`Mainlayout`, `DashboardLayout`, `AuthLayout`) | ⚠️ Layout State | ❌ No |
 | `src/lib/` | Library utilities & helpers (`cn` class merger) | ❌ No | ❌ No |
 | `src/pages/` | Page-level routed views (`public-site/`, `admin/`, `auth/`) | ✅ Yes | ⚠️ Via Stores/Services |
@@ -75,7 +75,6 @@ Organized into three main sub-domains:
 
 ### 7. `hooks/`
 - **Purpose**: Encapsulate reusable stateful logic.
-- **`useHashScroll.ts`**: Automatically scrolls to hash targets (e.g., `#cinemas`) when navigating.
 - **`useDebounce.ts`**: Debounces fast-changing values (e.g., search queries).
 - **`useAuth.ts`**: Auth helper hook.
 

@@ -53,7 +53,7 @@ export const Badge: React.FC<BadgeProps> = ({
 ---
 
 ### Common Components (`src/components/common/`)
-- **`Navbar`**: Provides desktop & mobile navigation links (`/`, `/movies`, `/#cinemas`, `/history`), user auth status dropdown, and quick admin role switch.
+- **`Navbar`**: Provides desktop & mobile navigation links (`/`, `/movies`, `/cinemas`, `/history`), user auth status dropdown, and quick admin role switch.
 - **`Footer`**: Brand information, movie links, cinema technology showcase links, and newsletter subscription form.
 - **`Sidebar`**: Admin dashboard navigation menu with active route highlighting.
 

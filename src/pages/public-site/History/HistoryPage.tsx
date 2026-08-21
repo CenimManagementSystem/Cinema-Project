@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'motion/react';
 import {
   Ticket,
   Calendar,
@@ -11,6 +12,19 @@ import {
 import { useMovieStore } from '@/store/movieStore';
 import { Badge } from '@/components/ui/Badge/Badge';
 import { formatCurrency, formatDate } from '@/utils/formatDate';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.05 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 12 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: 'easeOut' as const } }
+};
 
 export const HistoryPage: React.FC = () => {
   const { bookings, cancelBooking } = useMovieStore();
@@ -44,13 +58,20 @@ export const HistoryPage: React.FC = () => {
 
       {/* Tickets List */}
       {bookings.length > 0 ? (
-        <div className="space-y-6">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+          className="space-y-6"
+        >
           {bookings.map((booking) => {
             const isCancelled = booking.status === 'CANCELLED';
 
             return (
-              <div
+              <motion.div
                 key={booking.id}
+                variants={itemVariants}
+                whileHover={isCancelled ? {} : { y: -3 }}
                 className={`relative overflow-hidden rounded-3xl bg-[#151518] border border-white/10 transition-all ${
                   isCancelled ? 'opacity-50 grayscale' : 'hover:border-white/25 shadow-2xl'
                 }`}
@@ -150,10 +171,10 @@ export const HistoryPage: React.FC = () => {
                     )}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       ) : (
         <div className="p-12 text-center bg-[#151518] rounded-3xl border border-white/10 space-y-4">
           <Ticket className="w-12 h-12 text-gray-500 mx-auto" />

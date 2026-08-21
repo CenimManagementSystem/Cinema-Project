@@ -17,7 +17,7 @@ Cinematique is a modern, high-performance web application for movie discovery, r
   - **Booking Management (`/admin/bookings`)**: Manage customer reservations and statuses.
   - **User Management (`/admin/users`)**: Manage registered user accounts and roles.
 - **🔐 Authentication**: Sign In and Sign Up pages with instant role-switching demo mode.
-- **⚓ Smooth In-Page Navigation**: Integrated `useHashScroll` hook for navigating to homepage sections like `#cinemas`.
+- **🍿 Dedicated Cinemas Page (`/cinemas`)**: Standalone page showcasing cinematic viewing formats (IMAX, Dolby Atmos, VIP Recliners) and flagship theater locations.
 
 ---
 
@@ -80,6 +80,7 @@ npm run preview
 | `/movies/:id` | Movie Details, showtimes schedule, and trailer modal | `Mainlayout` |
 | `/booking/:showtimeId` | Interactive seat selection & checkout | `Mainlayout` |
 | `/history` | User ticket history & QR passes | `Mainlayout` |
+| `/cinemas` | Showcase of premium formats and local theater locations | `Mainlayout` |
 | `/login` | User login | `AuthLayout` |
 | `/register` | User registration | `AuthLayout` |
 | `/admin/dashboard` | Admin analytics & summary | `DashboardLayout` |

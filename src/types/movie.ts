@@ -25,7 +25,7 @@ export interface Showtime {
   hallName: string;
   date: string; // YYYY-MM-DD
   time: string; // e.g. "14:30"
-  format: '2D' | '3D' | 'IMAX' | '4DX';
+  format: '2D' | '3D' | 'IMAX' | '4DX' | 'VIP' | 'Dolby';
   price: number;
   vipPrice: number;
   occupiedSeats: string[]; // e.g. ["A3", "A4", "B1"]

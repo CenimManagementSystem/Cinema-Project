@@ -1,8 +1,22 @@
 import React, { useState } from 'react';
 import { Search, DollarSign } from 'lucide-react';
+import { motion } from 'motion/react';
 import { useMovieStore } from '@/store/movieStore';
 import { Badge } from '@/components/ui/Badge/Badge';
 import { formatCurrency, formatDate } from '@/utils/formatDate';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.03 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 6 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.22, ease: 'easeOut' as const } }
+};
 
 export const BookingsPage: React.FC = () => {
   const { bookings, cancelBooking } = useMovieStore();
@@ -91,9 +105,19 @@ export const BookingsPage: React.FC = () => {
                 <th className="py-3.5 px-4 font-semibold text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5 text-gray-300">
+            <motion.tbody 
+              key={statusFilter + search}
+              variants={containerVariants}
+              initial="hidden"
+              animate="show"
+              className="divide-y divide-white/5 text-gray-300"
+            >
               {filteredBookings.map((b) => (
-                <tr key={b.id} className="hover:bg-white/5 transition-colors">
+                <motion.tr 
+                  key={b.id} 
+                  variants={itemVariants}
+                  className="hover:bg-white/5 transition-colors"
+                >
                   <td className="py-3 px-4 font-mono font-bold text-white">
                     {b.id}
                   </td>
@@ -141,9 +165,9 @@ export const BookingsPage: React.FC = () => {
                       </button>
                     )}
                   </td>
-                </tr>
+                </motion.tr>
               ))}
-            </tbody>
+            </motion.tbody>
           </table>
         </div>
       </div>

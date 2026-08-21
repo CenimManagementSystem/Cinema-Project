@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'motion/react';
 import {
   DollarSign,
   Ticket,
@@ -15,6 +16,19 @@ import { Badge } from '@/components/ui/Badge/Badge';
 import { Modal } from '@/components/ui/Modal/Modal';
 import { MovieForm } from '@/components/forms/MovieForm/MovieForm';
 import { formatCurrency } from '@/utils/formatDate';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.05 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 10 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.3, ease: 'easeOut' as const } }
+};
 
 export const DashboardPage: React.FC = () => {
   const navigate = useNavigate();
@@ -105,12 +119,19 @@ export const DashboardPage: React.FC = () => {
       </div>
 
       {/* KPI Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        animate="show"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+      >
         {stats.map((stat) => {
           const Icon = stat.icon;
           return (
-            <div
+            <motion.div
               key={stat.title}
+              variants={itemVariants}
+              whileHover={{ y: -3 }}
               className="p-5 rounded-2xl bg-[#141417] border border-white/10 space-y-3 shadow-lg"
             >
               <div className="flex items-center justify-between">
@@ -128,10 +149,10 @@ export const DashboardPage: React.FC = () => {
                   {stat.change}
                 </span>
               </div>
-            </div>
+            </motion.div>
           );
         })}
-      </div>
+      </motion.div>
 
       {/* Chart & Live Status Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -163,8 +184,10 @@ export const DashboardPage: React.FC = () => {
                       {formatCurrency(data.revenue)}
                     </div>
                     {/* Bar */}
-                    <div
-                      style={{ height: `${heightPercent}%` }}
+                    <motion.div
+                      initial={{ height: 0 }}
+                      animate={{ height: `${heightPercent}%` }}
+                      transition={{ duration: 0.8, ease: 'easeOut' }}
                       className="w-full max-w-[36px] bg-gradient-to-t from-[#E50914]/60 to-[#E50914] rounded-t-lg group-hover:brightness-125 transition-all shadow-md shadow-[#E50914]/20"
                     />
                     {/* Day label */}

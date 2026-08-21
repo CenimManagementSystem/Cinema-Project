@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { motion } from 'motion/react';
 import {
   Film,
   LayoutDashboard,
@@ -56,14 +57,21 @@ export const Sidebar: React.FC = () => {
               <Link
                 key={item.name}
                 to={item.path}
-                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all ${
-                  active
-                    ? 'bg-[#E50914] text-white shadow-md shadow-[#E50914]/25'
-                    : 'text-gray-400 hover:text-white hover:bg-white/5'
+                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all relative ${
+                  active ? 'text-white' : 'text-gray-400 hover:text-white'
                 }`}
               >
-                <Icon className={`w-4 h-4 ${active ? 'text-white' : 'text-gray-400'}`} />
-                <span>{item.name}</span>
+                {active && (
+                  <motion.div
+                    layoutId="activeAdminNav"
+                    className="absolute inset-0 bg-[#E50914] rounded-xl shadow-md shadow-[#E50914]/25 z-0"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10 flex items-center gap-3">
+                  <Icon className={`w-4 h-4 ${active ? 'text-white' : 'text-gray-400 group-hover:text-white'}`} />
+                  <span>{item.name}</span>
+                </span>
               </Link>
             );
           })}

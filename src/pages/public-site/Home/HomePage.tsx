@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Play, Ticket, Star, Clock, Sparkles, Search, Compass } from 'lucide-react';
+import { motion } from 'motion/react';
 import { useMovieStore } from '@/store/movieStore';
 import { MovieCard } from '@/components/ui/Card/MovieCard';
 import { Badge } from '@/components/ui/Badge/Badge';
@@ -56,7 +57,12 @@ export const HomePage: React.FC = () => {
           </div>
 
           {/* Hero Content */}
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 w-full">
+          <motion.div 
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.1 }}
+            className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 w-full"
+          >
             <div className="max-w-2xl space-y-5">
               {/* Badges */}
               <div className="flex flex-wrap items-center gap-2.5">
@@ -113,7 +119,7 @@ export const HomePage: React.FC = () => {
                 )}
               </div>
             </div>
-          </div>
+          </motion.div>
         </section>
       )}
 
@@ -148,9 +154,11 @@ export const HomePage: React.FC = () => {
           {categories.map((cat) => {
             const active = selectedCategory === cat.id;
             return (
-              <button
+              <motion.button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 className={`px-4 py-2 rounded-xl text-xs font-bold tracking-wider uppercase whitespace-nowrap transition-all ${
                   active
                     ? 'bg-[#E50914] text-white shadow-md shadow-[#E50914]/30'
@@ -158,18 +166,30 @@ export const HomePage: React.FC = () => {
                 }`}
               >
                 {cat.name}
-              </button>
+              </motion.button>
             );
           })}
         </div>
 
         {/* Movies Grid */}
         {filteredMovies.length > 0 ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+          <motion.div 
+            key={selectedCategory + searchQuery}
+            variants={{
+              hidden: { opacity: 0 },
+              show: {
+                opacity: 1,
+                transition: { staggerChildren: 0.05 }
+              }
+            }}
+            initial="hidden"
+            animate="show"
+            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
+          >
             {filteredMovies.map((movie) => (
               <MovieCard key={movie.id} movie={movie} />
             ))}
-          </div>
+          </motion.div>
         ) : (
           <div className="py-16 text-center bg-white/5 border border-white/10 rounded-2xl p-8 space-y-3">
             <Compass className="w-10 h-10 text-gray-500 mx-auto animate-pulse" />
@@ -191,7 +211,7 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* Cinema Formats Showcase Section */}
-      <section id="cinemas" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-[#18181c] via-[#141417] to-[#1a1112] border border-white/10 space-y-8 shadow-2xl relative overflow-hidden">
           <div className="max-w-2xl space-y-3">
             <span className="text-xs font-bold text-[#E50914] tracking-widest uppercase">
@@ -206,26 +226,35 @@ export const HomePage: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="p-5 rounded-2xl bg-white/5 border border-white/5 space-y-2">
+            <motion.div 
+              whileHover={{ y: -4, borderColor: 'rgba(229, 9, 20, 0.4)' }}
+              className="p-5 rounded-2xl bg-white/5 border border-white/5 space-y-2 transition-colors duration-200"
+            >
               <span className="text-lg font-black text-[#E50914]">IMAX 3D Laser</span>
               <p className="text-xs text-gray-400">
                 Next-generation 4K laser projection with breathtaking realism and dynamic range.
               </p>
-            </div>
+            </motion.div>
 
-            <div className="p-5 rounded-2xl bg-white/5 border border-white/5 space-y-2">
+            <motion.div 
+              whileHover={{ y: -4, borderColor: 'rgba(250, 204, 21, 0.4)' }}
+              className="p-5 rounded-2xl bg-white/5 border border-white/5 space-y-2 transition-colors duration-200"
+            >
               <span className="text-lg font-black text-amber-400">Dolby Atmos Audio</span>
               <p className="text-xs text-gray-400">
                 Multi-dimensional sound that moves all around you with unmatched clarity and depth.
               </p>
-            </div>
+            </motion.div>
 
-            <div className="p-5 rounded-2xl bg-white/5 border border-white/5 space-y-2">
+            <motion.div 
+              whileHover={{ y: -4, borderColor: 'rgba(255, 255, 255, 0.2)' }}
+              className="p-5 rounded-2xl bg-white/5 border border-white/5 space-y-2 transition-colors duration-200"
+            >
               <span className="text-lg font-black text-white">VIP Suite Recliners</span>
               <p className="text-xs text-gray-400">
                 Motorized leather recliners with in-seat food and beverage service on demand.
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>

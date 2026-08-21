@@ -9,7 +9,7 @@ This document outlines the standard coding conventions for the Cinematique front
 | Item | Convention | Example |
 | :--- | :--- | :--- |
 | **Component Files** | PascalCase (`.tsx`) | `MovieCard.tsx`, `HomePage.tsx`, `Mainlayout.tsx` |
-| **Hook Files** | camelCase with `use` prefix (`.ts`) | `useHashScroll.ts`, `useDebounce.ts`, `useAuth.ts` |
+| **Hook Files** | camelCase with `use` prefix (`.ts`) | `useDebounce.ts`, `useAuth.ts` |
 | **Store Files** | camelCase with `Store` suffix (`.ts`) | `movieStore.ts`, `authStore.ts` |
 | **Utility Files** | camelCase (`.ts`) | `formatDate.ts`, `formatCurrency.ts` |
 | **Type Files** | camelCase (`.ts`) | `movie.ts`, `booking.ts`, `auth.ts` |
@@ -111,4 +111,4 @@ const movieStore = useMovieStore(); // Reads entire store
 
 - Use React Router v6 components (`Routes`, `Route`, `Link`, `Navigate`).
 - Use `useNavigate` for programmatic navigation.
-- For in-page anchor navigation on the homepage (like `#cinemas`), ensure the `useHashScroll` hook is active in `Mainlayout`.
+- Use relative routes or exact URLs instead of hash-based anchors for navigation.

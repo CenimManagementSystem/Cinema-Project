@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate, useSearchParams, Link } from 'react-router-dom';
+import { motion } from 'motion/react';
 import {
   Ticket,
   CheckCircle2,
@@ -194,15 +195,17 @@ export const BookingPage: React.FC = () => {
                       }
 
                       return (
-                        <button
+                        <motion.button
                           key={seatId}
                           disabled={isOccupied}
                           onClick={() => handleSeatClick(seatId)}
+                          whileHover={isOccupied ? {} : { scale: 1.15 }}
+                          whileTap={isOccupied ? {} : { scale: 0.85 }}
                           className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg text-[10px] flex items-center justify-center transition-all ${seatClass}`}
                           title={`${seatId} (${seatType} - ${formatCurrency(price)})`}
                         >
                           {seatNum}
-                        </button>
+                        </motion.button>
                       );
                     })}
                   </div>

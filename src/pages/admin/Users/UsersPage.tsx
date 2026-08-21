@@ -1,7 +1,21 @@
 import React, { useState } from 'react';
 import { Search } from 'lucide-react';
+import { motion } from 'motion/react';
 import { Badge } from '@/components/ui/Badge/Badge';
 import { formatDate } from '@/utils/formatDate';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.04 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 8 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.25, ease: 'easeOut' as const } }
+};
 
 interface Member {
   id: string;
@@ -111,9 +125,19 @@ export const UsersPage: React.FC = () => {
                 <th className="py-3.5 px-4 font-semibold text-right">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5 text-gray-300">
+            <motion.tbody 
+              key={search}
+              variants={containerVariants}
+              initial="hidden"
+              animate="show"
+              className="divide-y divide-white/5 text-gray-300"
+            >
               {filteredMembers.map((member) => (
-                <tr key={member.id} className="hover:bg-white/5 transition-colors">
+                <motion.tr 
+                  key={member.id} 
+                  variants={itemVariants}
+                  className="hover:bg-white/5 transition-colors"
+                >
                   <td className="py-3 px-4">
                     <div className="flex items-center gap-3">
                       <img
@@ -153,9 +177,9 @@ export const UsersPage: React.FC = () => {
                       Toggle to {member.role === 'ADMIN' ? 'User' : 'Admin'}
                     </button>
                   </td>
-                </tr>
+                </motion.tr>
               ))}
-            </tbody>
+            </motion.tbody>
           </table>
         </div>
       </div>

@@ -61,12 +61,12 @@ src/
 │   ├── 02-folder-guidelines.md
 │   ├── 03-coding-conventions.md
 │   ├── 04-component-guidelines.md
-│   └── 05-api-services.md
+│   ├── 05-api-services.md
+│   └── 06-animations-routing.md
 │
 ├── hooks/
 │   ├── useAuth.ts
-│   ├── useDebounce.ts
-│   └── useHashScroll.ts
+│   └── useDebounce.ts
 │
 ├── layouts/
 │   ├── AuthLayout.tsx
@@ -103,15 +103,21 @@ src/
 │       ├── Booking/
 │       │   ├── BookingPage.tsx
 │       │   └── index.ts
+│       ├── Cinemas/
+│       │   ├── CinemasPage.tsx
+│       │   └── index.ts
 │       ├── History/
 │       │   ├── HistoryPage.tsx
 │       │   └── index.ts
 │       ├── Home/
 │       │   ├── HomePage.tsx
 │       │   └── index.ts
-│       └── Movies/
-│           ├── MoviesPage.tsx
-│           ├── MovieDetailPage.tsx
+│       ├── Movies/
+│       │   ├── MoviesPage.tsx
+│       │   ├── MovieDetailPage.tsx
+│       │   └── index.ts
+│       └── NotFound/
+│           ├── NotFoundPage.tsx
 │           └── index.ts
 │
 ├── routes/
@@ -164,7 +170,7 @@ User Interaction
   UI / Common / Form Component (e.g., MovieCard, Navbar, Input)
        │
        ▼
-  Custom Hook / Zustand Store (e.g., useHashScroll, useMovieStore, useAuthStore)
+   Custom Hook / Zustand Store (e.g., useDebounce, useMovieStore, useAuthStore)
        │
        ▼
   API Service (apiClient.ts)

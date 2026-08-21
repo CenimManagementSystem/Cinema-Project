@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Star, Clock, Ticket } from 'lucide-react';
+import { motion, useReducedMotion } from 'motion/react';
 import { Movie } from '@/types/movie';
 import { Badge } from '@/components/ui/Badge/Badge';
 import { formatDuration, formatCurrency } from '@/utils/formatDate';
@@ -10,11 +11,20 @@ export interface MovieCardProps {
   className?: string;
 }
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 12 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.3, ease: 'easeOut' as const } }
+};
+
 export const MovieCard: React.FC<MovieCardProps> = ({ movie, className = '' }) => {
   const navigate = useNavigate();
+  const shouldReduceMotion = useReducedMotion();
 
   return (
-    <div
+    <motion.div
+      variants={cardVariants}
+      whileHover={shouldReduceMotion ? {} : { y: -4 }}
+      whileTap={{ scale: 0.98 }}
       onClick={() => navigate(`/movies/${movie.id}`)}
       className={`group relative flex flex-col rounded-xl overflow-hidden bg-[#161619] border border-white/10 hover:border-[#E50914]/50 transition-all duration-300 hover:shadow-xl hover:shadow-[#E50914]/10 cursor-pointer ${className}`}
     >
@@ -91,6 +101,6 @@ export const MovieCard: React.FC<MovieCardProps> = ({ movie, className = '' }) =
           </span>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };

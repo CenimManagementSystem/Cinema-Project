@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { X } from 'lucide-react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { cn } from '@/lib/utils';
 
 export interface ModalProps {
@@ -17,6 +18,8 @@ export const Modal: React.FC<ModalProps> = ({
   children,
   maxWidth = 'lg',
 }) => {
+  const shouldReduceMotion = useReducedMotion();
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -31,8 +34,6 @@ export const Modal: React.FC<ModalProps> = ({
     };
   }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
-
   const maxWMap = {
     sm: 'max-w-sm',
     md: 'max-w-md',
@@ -42,33 +43,53 @@ export const Modal: React.FC<ModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Backdrop */}
-      <div
-        className="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
-        onClick={onClose}
-      />
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm"
+            onClick={onClose}
+          />
 
-      {/* Modal Dialog */}
-      <div
-        className={cn(
-          'relative w-full bg-[#161619] border border-white/10 rounded-2xl shadow-2xl p-6 overflow-hidden z-10 animate-in fade-in zoom-in-95 duration-200',
-          maxWMap[maxWidth]
-        )}
-      >
-        {title && (
-          <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/10">
-            <h3 className="text-lg font-bold text-white tracking-wide">{title}</h3>
-            <button
-              onClick={onClose}
-              className="p-1 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-        )}
-        <div>{children}</div>
-      </div>
-    </div>
+          {/* Modal Dialog */}
+          <motion.div
+            initial={{ 
+              opacity: 0, 
+              scale: shouldReduceMotion ? 1 : 0.96, 
+              y: shouldReduceMotion ? 0 : 8 
+            }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ 
+              opacity: 0, 
+              scale: shouldReduceMotion ? 1 : 0.96, 
+              y: shouldReduceMotion ? 0 : 8 
+            }}
+            transition={{ type: 'spring', stiffness: 350, damping: 28 }}
+            className={cn(
+              'relative w-full bg-[#161619] border border-white/10 rounded-2xl shadow-2xl p-6 overflow-hidden z-10',
+              maxWMap[maxWidth]
+            )}
+          >
+            {title && (
+              <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/10">
+                <h3 className="text-lg font-bold text-white tracking-wide">{title}</h3>
+                <button
+                  onClick={onClose}
+                  className="p-1 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            )}
+            <div>{children}</div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
   );
 };

@@ -12,6 +12,10 @@ import { MoviesPage as PublicMoviesPage } from '@/pages/public-site/Movies/Movie
 import { MovieDetailPage } from '@/pages/public-site/Movies/MovieDetailPage';
 import { BookingPage } from '@/pages/public-site/Booking/BookingPage';
 import { HistoryPage } from '@/pages/public-site/History/HistoryPage';
+import { CinemasPage } from '@/pages/public-site/Cinemas';
+import { OffersPage } from '@/pages/public-site/Offers';
+import { PremierePage } from '@/pages/public-site/Premiere';
+import { NotFoundPage } from '@/pages/public-site/NotFound';
 
 // Auth Pages
 import { LoginPage } from '@/pages/auth/Login/LoginPage';
@@ -33,6 +37,12 @@ export const AppRoutes: React.FC = () => {
         <Route path="/movies/:id" element={<MovieDetailPage />} />
         <Route path="/booking/:showtimeId" element={<BookingPage />} />
         <Route path="/history" element={<HistoryPage />} />
+        <Route path="/cinemas" element={<CinemasPage />} />
+        <Route path="/offers" element={<OffersPage />} />
+        <Route path="/premiere" element={<PremierePage />} />
+        <Route path="/membership" element={<PremierePage />} />
+        <Route path="/premiere-circle" element={<PremierePage />} />
+        <Route path="/coming-soon" element={<PremierePage />} />
       </Route>
 
       {/* Authentication Layout & Routes */}
@@ -41,17 +51,23 @@ export const AppRoutes: React.FC = () => {
         <Route path="/register" element={<RegisterPage />} />
       </Route>
 
+      {/* Redirects for legacy/incorrect prefix routes */}
+      <Route path="/en/admin/*" element={<Navigate to="/admin/dashboard" replace />} />
+      <Route path="/en/dashboard" element={<Navigate to="/admin/dashboard" replace />} />
+
       {/* Admin Dashboard Layout & Routes */}
-      <Route path="/en/admin" element={<DashboardLayout />}>
-        <Route index element={<Navigate to="/en/admin/dashboard" replace />} />
+      <Route path="/admin" element={<DashboardLayout />}>
+        <Route index element={<Navigate to="/admin/dashboard" replace />} />
         <Route path="dashboard" element={<DashboardPage />} />
         <Route path="movies" element={<MoviesPage />} />
         <Route path="bookings" element={<BookingsPage />} />
         <Route path="users" element={<UsersPage />} />
       </Route>
 
-      {/* Fallback Redirect */}
-      <Route path="*" element={<Navigate to="/" replace />} />
+      {/* 404 Page Not Found Fallback */}
+      <Route element={<Mainlayout />}>
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
     </Routes>
   );
 };

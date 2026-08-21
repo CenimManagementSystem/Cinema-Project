@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'motion/react';
 import {
   Plus,
   Search,
@@ -13,6 +14,19 @@ import { Badge } from '@/components/ui/Badge/Badge';
 import { Modal } from '@/components/ui/Modal/Modal';
 import { MovieForm } from '@/components/forms/MovieForm/MovieForm';
 import { formatCurrency, formatDuration } from '@/utils/formatDate';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.04 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 8 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.25, ease: 'easeOut' as const } }
+};
 
 export const MoviesPage: React.FC = () => {
   const { movies, addMovie, updateMovie, deleteMovie } = useMovieStore();
@@ -123,9 +137,19 @@ export const MoviesPage: React.FC = () => {
                 <th className="py-3.5 px-4 font-semibold text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5 text-gray-300">
+            <motion.tbody 
+              key={filterStatus + search}
+              variants={containerVariants}
+              initial="hidden"
+              animate="show"
+              className="divide-y divide-white/5 text-gray-300"
+            >
               {filteredMovies.map((movie) => (
-                <tr key={movie.id} className="hover:bg-white/5 transition-colors">
+                <motion.tr 
+                  key={movie.id} 
+                  variants={itemVariants}
+                  className="hover:bg-white/5 transition-colors"
+                >
                   {/* Poster & Title */}
                   <td className="py-3 px-4">
                     <div className="flex items-center gap-3">
@@ -198,9 +222,9 @@ export const MoviesPage: React.FC = () => {
                       </button>
                     </div>
                   </td>
-                </tr>
+                </motion.tr>
               ))}
-            </tbody>
+            </motion.tbody>
           </table>
         </div>
       </div>
