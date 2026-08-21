@@ -1,641 +1,302 @@
-# React + TypeScript + Vite Project Structure
+# Cinematique - Frontend Project Structure & Architecture
 
-This project follows a scalable folder structure suitable for small, medium, and large React applications without using a `features` folder. The structure separates responsibilities such as UI components, pages, API services, state management, utilities, and layouts.
-
----
-
-# Project Structure
-
-```text
-src/
-├── app/
-├── assets/
-├── components/
-├── context/
-├── hooks/
-├── layouts/
-├── pages/
-├── routes/
-├── services/
-├── store/
-├── types/
-├── utils/
-├── App.tsx
-├── main.tsx
-├── index.css
-└── vite-env.d.ts
-```
+This project follows a scalable, modular folder structure suitable for production React applications. The structure strictly separates responsibilities into UI components, page views, API services, global state management (Zustand), layouts, custom hooks, and utilities.
 
 ---
 
-# Folder Explanation
-
-## app/
-
-Contains the application configuration.
+# Complete Project Directory Tree
 
 ```text
-app/
-├── auth.ts
-├── providers.tsx
-└── store.ts
-```
-
-### Purpose
-
-- Configure authentication
-- Register React Providers
-- Configure Redux/Zustand store
-- Application initialization
-
-Example:
-
-```tsx
-<AuthProvider>
-    <ThemeProvider>
-        <App />
-    </ThemeProvider>
-</AuthProvider>
-```
-
----
-
-# assets/
-
-Stores static files.
-
-```text
-assets/
-├── images/
-├── icons/
-├── fonts/
-└── styles/
-```
-
-### images/
-
-Store logos, banners, movie posters, avatars, etc.
-
-Example
-
-```text
-logo.png
-banner.jpg
-avatar.png
-```
-
----
-
-### icons/
-
-SVG icons or custom icons.
-
-```text
-play.svg
-ticket.svg
-movie.svg
-```
-
----
-
-### fonts/
-
-Custom fonts.
-
-```text
-Poppins.ttf
-Inter.ttf
-```
-
----
-
-### styles/
-
-Global styles.
-
-```text
-variables.css
-global.css
-theme.css
-```
-
----
-
-# components/
-
-Reusable UI components.
-
-```text
-components/
-├── common/
-├── forms/
-└── ui/
-```
-
----
-
-## common/
-
-Application-wide reusable components.
-
-```text
-common/
-├── Header/
-├── Footer/
-├── Navbar/
-├── Sidebar/
-└── Loading/
-```
-
-Example
-
-Header is used on every page.
-
-Sidebar is used in Dashboard.
-
-Loading spinner while fetching data.
-
----
-
-## forms/
-
-Reusable forms.
-
-```text
-forms/
-├── LoginForm/
-├── RegisterForm/
-└── BookingForm/
-```
-
-Each form contains
-
-```text
-LoginForm/
-├── LoginForm.tsx
-├── LoginForm.css
-└── index.ts
+Frontend/
+├── public/
+├── src/
+│   ├── app/
+│   │   ├── auth.ts
+│   │   ├── provider.ts
+│   │   └── store.ts
+│   │
+│   ├── assets/
+│   │   └── logo.png
+│   │
+│   ├── components/
+│   │   ├── common/
+│   │   │   ├── Footer/
+│   │   │   │   ├── Footer.tsx
+│   │   │   │   └── index.ts
+│   │   │   ├── Navbar/
+│   │   │   │   ├── Navbar.tsx
+│   │   │   │   └── index.ts
+│   │   │   └── Sidebar/
+│   │   │       ├── Sidebar.tsx
+│   │   │       └── index.ts
+│   │   │
+│   │   ├── forms/
+│   │   │   ├── LoginForm/
+│   │   │   │   ├── LoginForm.tsx
+│   │   │   │   └── index.ts
+│   │   │   ├── MovieForm/
+│   │   │   │   ├── MovieForm.tsx
+│   │   │   │   └── index.ts
+│   │   │   └── RegisterForm/
+│   │   │       ├── RegisterForm.tsx
+│   │   │       └── index.ts
+│   │   │
+│   │   └── ui/
+│   │       ├── Badge/
+│   │       │   ├── Badge.tsx
+│   │       │   └── index.ts
+│   │       ├── Card/
+│   │       │   ├── MovieCard.tsx
+│   │       │   └── index.ts
+│   │       ├── Input/
+│   │       │   ├── Input.tsx
+│   │       │   └── index.ts
+│   │       ├── Modal/
+│   │       │   ├── Modal.tsx
+│   │       │   └── index.ts
+│   │       ├── Spinner/
+│   │       │   ├── Spinner.tsx
+│   │       │   └── index.ts
+│   │       ├── button.tsx
+│   │       └── card.tsx
+│   │
+│   ├── context/
+│   │   ├── AuthContext.tsx
+│   │   └── ThemeContext.tsx
+│   │
+│   ├── docs/
+│   │   ├── 01-project-structure.md
+│   │   ├── 02-folder-guidelines.md
+│   │   ├── 03-coding-conventions.md
+│   │   ├── 04-component-guidelines.md
+│   │   └── 05-api-services.md
+│   │
+│   ├── hooks/
+│   │   ├── useAuth.ts
+│   │   ├── useDebounce.ts
+│   │   └── useHashScroll.ts
+│   │
+│   ├── layouts/
+│   │   ├── AuthLayout.tsx
+│   │   ├── DashboardLayout.tsx
+│   │   └── Mainlayout.tsx
+│   │
+│   ├── lib/
+│   │   └── utils.ts
+│   │
+│   ├── pages/
+│   │   ├── admin/
+│   │   │   ├── Bookings/
+│   │   │   │   ├── BookingsPage.tsx
+│   │   │   │   └── index.ts
+│   │   │   ├── Movies/
+│   │   │   │   ├── MoviesPage.tsx
+│   │   │   │   └── index.ts
+│   │   │   ├── Users/
+│   │   │   │   ├── UsersPage.tsx
+│   │   │   │   └── index.ts
+│   │   │   └── DashboardPage.tsx
+│   │   │
+│   │   ├── auth/
+│   │   │   ├── Login/
+│   │   │   │   ├── LoginPage.tsx
+│   │   │   │   └── index.ts
+│   │   │   ├── Register/
+│   │   │   │   ├── RegisterPage.tsx
+│   │   │   │   └── index.ts
+│   │   │   ├── LoginForm.tsx
+│   │   │   └── index.ts
+│   │   │
+│   │   └── public-site/
+│   │       ├── Booking/
+│   │       │   ├── BookingPage.tsx
+│   │       │   └── index.ts
+│   │       ├── History/
+│   │       │   ├── HistoryPage.tsx
+│   │       │   └── index.ts
+│   │       ├── Home/
+│   │       │   ├── HomePage.tsx
+│   │       │   └── index.ts
+│   │       └── Movies/
+│   │           ├── MoviesPage.tsx
+│   │           ├── MovieDetailPage.tsx
+│   │           └── index.ts
+│   │
+│   ├── routes/
+│   │   ├── AppRoutes.tsx
+│   │   └── ProtectedRoute.tsx
+│   │
+│   ├── services/
+│   │   └── apiClient.ts
+│   │
+│   ├── store/
+│   │   ├── authStore.ts
+│   │   ├── movieStore.ts
+│   │   └── userStore.ts
+│   │
+│   ├── types/
+│   │   ├── admin.ts
+│   │   ├── api.d.ts
+│   │   ├── auth.ts
+│   │   ├── booking.ts
+│   │   └── movie.ts
+│   │
+│   ├── utils/
+│   │   ├── __tests__/
+│   │   ├── formatCurrency.ts
+│   │   └── formatDate.ts
+│   │
+│   ├── App.tsx
+│   ├── main.tsx
+│   ├── index.css
+│   └── vite-env.d.ts
+│
+├── .env
+├── .env.example
+├── components.json
+├── eslint.config.js
+├── index.html
+├── package.json
+├── PROJECT_STRUCTURE.md
+├── README.md
+├── tsconfig.json
+└── vite.config.ts
 ```
 
 ---
 
-## ui/
+# Directory Responsibilities & Structure
 
-Small reusable UI components.
-
-```text
-ui/
-├── Button/
-├── Input/
-├── Select/
-├── Modal/
-├── Table/
-├── Card/
-├── Badge/
-├── Spinner/
-└── Pagination/
-```
-
-Example
-
-Button
-
-```tsx
-<Button variant="primary">
-    Save
-</Button>
-```
-
-Input
-
-```tsx
-<Input
-    placeholder="Email"
-/>
-```
-
-Modal
-
-```tsx
-<Modal>
-    Delete this movie?
-</Modal>
-```
+## `app/`
+Contains root application bootstrapping, providers, and store initializations.
+- `auth.ts`: Authentication initialization.
+- `provider.ts`: Context & global provider composition.
+- `store.ts`: Store export registry.
 
 ---
 
-# context/
-
-React Context.
-
-```text
-context/
-├── AuthContext.tsx
-└── ThemeContext.tsx
-```
-
-Use when global state is small.
-
-Example
-
-- Theme
-- Language
-- Authentication
+## `components/`
+Organized into three strict subdirectories:
+- **`common/`**: Application-wide layout structures (`Navbar`, `Footer`, `Sidebar`).
+- **`forms/`**: Dedicated forms handling field validation (`LoginForm`, `MovieForm`, `RegisterForm`).
+- **`ui/`**: Atomic, presentational, reusable UI primitives (`Badge`, `Card` / `MovieCard`, `Input`, `Modal`, `Spinner`, `button.tsx`, `card.tsx`).
 
 ---
 
-# hooks/
-
-Reusable custom hooks.
-
-```text
-hooks/
-├── useAuth.ts
-├── useDebounce.ts
-├── useLocalStorage.ts
-└── usePagination.ts
-```
-
-Example
-
-```tsx
-const { user } = useAuth();
-```
+## `layouts/`
+Structural wrappers rendered by React Router containing `<Outlet />`:
+- **`Mainlayout.tsx`**: Header Navbar, main scrollable content area with `useHashScroll()`, and Footer.
+- **`DashboardLayout.tsx`**: Admin Sidebar navigation, header, and dashboard content view.
+- **`AuthLayout.tsx`**: Centered card layout with cinematic background for Login and Register pages.
 
 ---
 
-# layouts/
+## `pages/`
+Page views mapped to routes:
 
-Application layouts.
+### `public-site/`
+- **`Home/HomePage.tsx`**: Hero showcase banner, featured premiere, cinema formats section (`#cinemas`).
+- **`Movies/MoviesPage.tsx`**: Dedicated catalog page (`/movies`) with search by title/genre and category filters.
+- **`Movies/MovieDetailPage.tsx`**: Single movie page (`/movies/:id`) with synopsis, trailer modal, date selector, and showtime listings.
+- **`Booking/BookingPage.tsx`**: Interactive cinema seat grid selection, pricing calculator, and ticket confirmation (`/booking/:showtimeId`).
+- **`History/HistoryPage.tsx`**: Ticket booking history list with QR codes (`/history`).
 
-```text
-layouts/
-├── MainLayout.tsx
-├── DashboardLayout.tsx
-└── AuthLayout.tsx
-```
+### `admin/`
+- **`DashboardPage.tsx`**: Admin metrics overview, revenue stats, occupancy rates, and quick actions (`/admin/dashboard`).
+- **`Movies/MoviesPage.tsx`**: Admin movie inventory management (add/edit/delete movies) (`/admin/movies`).
+- **`Bookings/BookingsPage.tsx`**: Booking orders list and status management (`/admin/bookings`).
+- **`Users/UsersPage.tsx`**: User account listing and role management (`/admin/users`).
 
-Example
-
-Main Layout
-
-```text
-Navbar
--------
-Content
--------
-Footer
-```
-
-Dashboard Layout
-
-```text
-Sidebar | Content
-```
-
-Auth Layout
-
-```text
-Login
-Register
-Forgot Password
-```
+### `auth/`
+- **`Login/LoginPage.tsx`**: User login screen (`/login`).
+- **`Register/RegisterPage.tsx`**: User registration screen (`/register`).
 
 ---
 
-# pages/
-
-Actual pages shown by React Router.
-
-```text
-pages/
-├── admin/
-├── auth/
-└── user/
-```
+## `routes/`
+- **`AppRoutes.tsx`**: Complete React Router route tree with public, auth, and admin route blocks.
+- **`ProtectedRoute.tsx`**: Authentication and role-based route guard.
 
 ---
 
-## admin/
-
-Dashboard pages.
-
-```text
-Dashboard/
-Movies/
-Cinemas/
-Rooms/
-Bookings/
-Users/
-Settings/
-```
-
-Example URL
-
-```text
-/admin/dashboard
-/admin/movies
-/admin/users
-```
+## `store/`
+Zustand-powered global state stores:
+- **`movieStore.ts`**: Movies state, category filtering, search query, showtime listings, and seat reservations.
+- **`authStore.ts`**: Current user session, authentication status, login/logout, and demo role switching.
+- **`userStore.ts`**: User administration state.
 
 ---
 
-## auth/
+## `hooks/`
+- **`useHashScroll.ts`**: Enables smooth in-page scrolling to hash anchors (e.g., `/#cinemas`) across React Router navigation.
+- **`useDebounce.ts`**: Debounces fast-changing state values.
+- **`useAuth.ts`**: Auth helper hook.
 
-Authentication pages.
+---
+
+## `services/`
+- **`apiClient.ts`**: Configured Axios instance with automatic JWT Authorization header injection and base URL resolution.
+
+---
+
+## `types/`
+- `movie.ts`: Movie and Showtime interfaces.
+- `booking.ts`: Booking order, seat selection, and payment status types.
+- `auth.ts`: User credentials and auth state types.
+- `admin.ts`: Dashboard metrics and administrative types.
+- `api.d.ts`: Generic API response definitions.
+
+---
+
+## `utils/` & `lib/`
+- **`formatDate.ts`**: Date, time, and movie duration formatting.
+- **`formatCurrency.ts`**: Currency ($ USD) formatting.
+- **`lib/utils.ts`**: `cn()` utility combining `clsx` and `tailwind-merge`.
+
+---
+
+# Application Routing Table
+
+| Route Path | Page Component | Layout | Access |
+| :--- | :--- | :--- | :--- |
+| `/` | `HomePage` | `Mainlayout` | Public |
+| `/movies` | `MoviesPage` | `Mainlayout` | Public |
+| `/movies/:id` | `MovieDetailPage` | `Mainlayout` | Public |
+| `/booking/:showtimeId` | `BookingPage` | `Mainlayout` | Public |
+| `/history` | `HistoryPage` | `Mainlayout` | Public |
+| `/login` | `LoginPage` | `AuthLayout` | Public / Guest |
+| `/register` | `RegisterPage` | `AuthLayout` | Public / Guest |
+| `/admin/dashboard` | `DashboardPage` | `DashboardLayout` | Admin |
+| `/admin/movies` | `MoviesPage` (Admin) | `DashboardLayout` | Admin |
+| `/admin/bookings` | `BookingsPage` | `DashboardLayout` | Admin |
+| `/admin/users` | `UsersPage` | `DashboardLayout` | Admin |
+| `*` | Redirect to `/` | — | Fallback |
+
+---
+
+# Architecture Flow
 
 ```text
-Login/
-Register/
-ForgotPassword/
+User Event
+    │
+    ▼
+React Router (AppRoutes.tsx)
+    │
+    ▼
+Layout Component (Mainlayout / DashboardLayout / AuthLayout)
+    │
+    ▼
+Page Component (e.g., MoviesPage, MovieDetailPage, BookingPage)
+    │
+    ▼
+UI / Form Components (e.g., MovieCard, Navbar, Badge, Modal)
+    │
+    ▼
+Zustand Store (movieStore.ts, authStore.ts)
+    │
+    ▼
+API Service (apiClient.ts)
+    │
+    ▼
+Backend API Endpoint
 ```
-
-Example URL
-
-```text
-/login
-/register
-```
-
----
-
-## user/
-
-Public pages.
-
-```text
-Home/
-Movies/
-MovieDetail/
-Booking/
-Profile/
-History/
-```
-
-Example URL
-
-```text
-/
-/movies
-/profile
-```
-
----
-
-# routes/
-
-React Router configuration.
-
-```text
-routes/
-├── AppRoutes.tsx
-├── PrivateRoute.tsx
-├── AdminRoute.tsx
-└── index.ts
-```
-
-### AppRoutes
-
-All application routes.
-
-### PrivateRoute
-
-Only logged-in users.
-
-### AdminRoute
-
-Only admin users.
-
----
-
-# services/
-
-API communication.
-
-```text
-services/
-├── apiClient.ts
-├── auth.service.ts
-├── user.service.ts
-├── movie.service.ts
-├── cinema.service.ts
-├── room.service.ts
-├── booking.service.ts
-└── payment.service.ts
-```
-
-Example
-
-```tsx
-movie.service.ts
-```
-
-```ts
-export const getMovies = () =>
-    apiClient.get("/movies");
-```
-
-Never place UI code here.
-
-Only API calls.
-
----
-
-# store/
-
-State management.
-
-```text
-store/
-├── authStore.ts
-├── bookingStore.ts
-├── movieStore.ts
-└── userStore.ts
-```
-
-Can use
-
-- Redux Toolkit
-- Zustand
-
-Example
-
-```ts
-const user = useUserStore();
-```
-
----
-
-# types/
-
-TypeScript interfaces.
-
-```text
-types/
-├── auth.ts
-├── booking.ts
-├── movie.ts
-├── user.ts
-└── api.ts
-```
-
-Example
-
-```ts
-export interface User {
-    id: number;
-    name: string;
-    email: string;
-}
-```
-
----
-
-# utils/
-
-Helper functions.
-
-```text
-utils/
-├── formatDate.ts
-├── formatCurrency.ts
-├── helpers.ts
-├── validators.ts
-└── storage.ts
-```
-
-Example
-
-```ts
-formatCurrency(100);
-```
-
-Output
-
-```text
-$100.00
-```
-
-Example
-
-```ts
-formatDate(new Date());
-```
-
-Output
-
-```text
-21 Jul 2026
-```
-
----
-
-# Root Files
-
-## main.tsx
-
-Application entry point.
-
-```tsx
-ReactDOM.createRoot(...)
-```
-
----
-
-## App.tsx
-
-Root application component.
-
-Contains
-
-- Router
-- Layout
-- Providers
-
----
-
-## index.css
-
-Global CSS.
-
----
-
-## vite-env.d.ts
-
-Vite TypeScript definitions.
-
----
-
-# Recommended Workflow
-
-```text
-Page
-    ↓
-Component
-    ↓
-Hook
-    ↓
-Service
-    ↓
-API
-```
-
-Example
-
-```text
-MoviesPage
-      ↓
-MovieCard
-      ↓
-useMovies()
-      ↓
-movie.service.ts
-      ↓
-GET /movies
-```
-
----
-
-# Best Practices
-
-✅ Keep components small and reusable.
-
-✅ Put API calls inside `services`.
-
-✅ Put helper functions inside `utils`.
-
-✅ Put TypeScript interfaces inside `types`.
-
-✅ Put reusable UI inside `components/ui`.
-
-✅ Put page-specific code inside `pages`.
-
-✅ Keep layouts separate from pages.
-
-✅ Use hooks for reusable logic.
-
-✅ Avoid duplicate code.
-
----
-
-# Folder Responsibility Summary
-
-| Folder | Responsibility |
-|---------|----------------|
-| app | Application configuration |
-| assets | Images, fonts, icons, styles |
-| components | Reusable UI |
-| context | React Context |
-| hooks | Custom Hooks |
-| layouts | Page layouts |
-| pages | Screen/Page components |
-| routes | React Router |
-| services | API communication |
-| store | Global state |
-| types | TypeScript interfaces |
-| utils | Helper functions |
-
----
-
-
-This architecture keeps the project clean, scalable, and easy to maintain as the application grows.

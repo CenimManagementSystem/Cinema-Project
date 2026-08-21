@@ -1,137 +1,174 @@
+# Project Structure
+
+```text
 src/
 ├── app/
 │   ├── auth.ts
-│   ├── providers.tsx
+│   ├── provider.ts
 │   └── store.ts
 │
 ├── assets/
-│   ├── images/
-│   ├── icons/
-│   ├── fonts/
-│   └── styles/
+│   └── logo.png
 │
 ├── components/
 │   ├── common/
-│   │   ├── Header/
 │   │   ├── Footer/
+│   │   │   ├── Footer.tsx
+│   │   │   └── index.ts
 │   │   ├── Navbar/
-│   │   ├── Sidebar/
-│   │   └── Loading/
+│   │   │   ├── Navbar.tsx
+│   │   │   └── index.ts
+│   │   └── Sidebar/
+│   │       ├── Sidebar.tsx
+│   │       └── index.ts
 │   │
 │   ├── forms/
 │   │   ├── LoginForm/
-│   │   ├── RegisterForm/
-│   │   └── BookingForm/
+│   │   │   ├── LoginForm.tsx
+│   │   │   └── index.ts
+│   │   ├── MovieForm/
+│   │   │   ├── MovieForm.tsx
+│   │   │   └── index.ts
+│   │   └── RegisterForm/
+│   │       ├── RegisterForm.tsx
+│   │       └── index.ts
 │   │
 │   └── ui/
-│       ├── Button/
-│       ├── Input/
-│       ├── Select/
-│       ├── Modal/
-│       ├── Table/
-│       ├── Card/
 │       ├── Badge/
+│       │   ├── Badge.tsx
+│       │   └── index.ts
+│       ├── Card/
+│       │   ├── MovieCard.tsx
+│       │   └── index.ts
+│       ├── Input/
+│       │   ├── Input.tsx
+│       │   └── index.ts
+│       ├── Modal/
+│       │   ├── Modal.tsx
+│       │   └── index.ts
 │       ├── Spinner/
-│       └── Pagination/
+│       │   ├── Spinner.tsx
+│       │   └── index.ts
+│       ├── button.tsx
+│       └── card.tsx
 │
 ├── context/
+│   ├── AuthContext.tsx
+│   └── ThemeContext.tsx
+│
+├── docs/
+│   ├── 01-project-structure.md
+│   ├── 02-folder-guidelines.md
+│   ├── 03-coding-conventions.md
+│   ├── 04-component-guidelines.md
+│   └── 05-api-services.md
 │
 ├── hooks/
 │   ├── useAuth.ts
 │   ├── useDebounce.ts
-│   ├── useLocalStorage.ts
-│   └── usePagination.ts
+│   └── useHashScroll.ts
 │
 ├── layouts/
-│   ├── MainLayout.tsx
+│   ├── AuthLayout.tsx
 │   ├── DashboardLayout.tsx
-│   └── AuthLayout.tsx
+│   └── Mainlayout.tsx
+│
+├── lib/
+│   └── utils.ts
 │
 ├── pages/
 │   ├── admin/
-│   │   ├── Dashboard/
-│   │   ├── Movies/
-│   │   ├── Cinemas/
-│   │   ├── Rooms/
 │   │   ├── Bookings/
+│   │   │   ├── BookingsPage.tsx
+│   │   │   └── index.ts
+│   │   ├── Movies/
+│   │   │   ├── MoviesPage.tsx
+│   │   │   └── index.ts
 │   │   ├── Users/
-│   │   └── Settings/
+│   │   │   ├── UsersPage.tsx
+│   │   │   └── index.ts
+│   │   └── DashboardPage.tsx
 │   │
 │   ├── auth/
 │   │   ├── Login/
+│   │   │   ├── LoginPage.tsx
+│   │   │   └── index.ts
 │   │   ├── Register/
-│   │   └── ForgotPassword/
+│   │   │   ├── RegisterPage.tsx
+│   │   │   └── index.ts
+│   │   ├── LoginForm.tsx
+│   │   └── index.ts
 │   │
 │   └── public-site/
-│       ├── Home/
-│       ├── Movies/
-│       ├── MovieDetail/
 │       ├── Booking/
-│       ├── Profile/
-│       └── History/
+│       │   ├── BookingPage.tsx
+│       │   └── index.ts
+│       ├── History/
+│       │   ├── HistoryPage.tsx
+│       │   └── index.ts
+│       ├── Home/
+│       │   ├── HomePage.tsx
+│       │   └── index.ts
+│       └── Movies/
+│           ├── MoviesPage.tsx
+│           ├── MovieDetailPage.tsx
+│           └── index.ts
 │
 ├── routes/
 │   ├── AppRoutes.tsx
-│   ├── PrivateRoute.tsx
-│   ├── AdminRoute.tsx
-│   └── index.ts
+│   └── ProtectedRoute.tsx
 │
 ├── services/
-│   ├── apiClient.ts
-│   ├── auth.service.ts
-│   ├── user.service.ts
-│   ├── movie.service.ts
-│   ├── cinema.service.ts
-│   ├── room.service.ts
-│   ├── booking.service.ts
-│   └── payment.service.ts
+│   └── apiClient.ts
 │
 ├── store/
 │   ├── authStore.ts
-│   ├── bookingStore.ts
 │   ├── movieStore.ts
 │   └── userStore.ts
 │
 ├── types/
+│   ├── admin.ts
+│   ├── api.d.ts
 │   ├── auth.ts
 │   ├── booking.ts
-│   ├── movie.ts
-│   ├── user.ts
-│   └── api.ts
+│   └── movie.ts
 │
 ├── utils/
-│   ├── formatDate.ts
+│   ├── __tests__/
 │   ├── formatCurrency.ts
-│   ├── helpers.ts
-│   ├── validators.ts
-│   └── storage.ts
+│   └── formatDate.ts
 │
 ├── App.tsx
 ├── main.tsx
 ├── index.css
 └── vite-env.d.ts
+```
 
+---
 
 # Architecture Flow
 
 ```text
-User
-   │
-   ▼
-Page
-   │
-   ▼
-Component
-   │
-   ▼
-Hook
-   │
-   ▼
-Service
-   │
-   ▼
-API
-   │
-   ▼
-Database
+User Interaction
+       │
+       ▼
+  React Router (AppRoutes.tsx)
+       │
+       ▼
+     Layout (Mainlayout / DashboardLayout / AuthLayout)
+       │
+       ▼
+     Page Component (e.g., HomePage, MoviesPage, MovieDetailPage)
+       │
+       ▼
+  UI / Common / Form Component (e.g., MovieCard, Navbar, Input)
+       │
+       ▼
+  Custom Hook / Zustand Store (e.g., useHashScroll, useMovieStore, useAuthStore)
+       │
+       ▼
+  API Service (apiClient.ts)
+       │
+       ▼
+  Backend API / Mock Data
 ```
